@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="DynamicComboBoxItemsSource.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300" d:DesignWidth="400"
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             xmlns:local="clr-namespace:DynamicComboBoxItemsSource">
+    <UserControl.Resources>
+        <dxg:RowPropertyValueConverter x:Key="RowPropertyValueConverter" />
+    </UserControl.Resources>
+    <Grid x:Name="LayoutRoot" Background="White">
+        <dxg:GridControl Name="grid">
+            <dxg:GridControl.Columns>
+                <dxg:GridColumn FieldName="Text"/>
+                <dxg:GridColumn FieldName="Number">
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <dxe:ComboBoxEdit x:Name="PART_Editor" DisplayMember="Text" ValueMember="Number" >
+                                <dxe:ComboBoxEdit.ItemsSource>
+                                    <Binding Path="Data">
+                                        <Binding.Converter>
+                                            <local:TextToItemsSourceConverter/>
+                                        </Binding.Converter>
+                                    </Binding>
+                                </dxe:ComboBoxEdit.ItemsSource>
+                            </dxe:ComboBoxEdit>
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
+            </dxg:GridControl.Columns>
+        </dxg:GridControl>
+    </Grid>
+</UserControl>
